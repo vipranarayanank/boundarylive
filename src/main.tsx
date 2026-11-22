@@ -28,7 +28,7 @@ function App(){
  const [lang,setLang]=useState<Lang>(localStorage.getItem('bl-lang') as Lang || (detected in copy?detected:'en'))
  const t=copy[lang]; const rtl=lang==='ar'
  const [settings,setSettings]=useState<Settings>(initial),[loading,setLoading]=useState(true),[choice,setChoice]=useState(''),[voted,setVoted]=useState(false),[counts,setCounts]=useState<number[]>([]),[error,setError]=useState('')
- const [admin,setAdmin]=useState(location.pathname==='/admin'),[session,setSession]=useState<any>(null),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[form,setForm]=useState(initial),[notice,setNotice]=useState('')
+ const admin=location.pathname==='/admin',[session,setSession]=useState<any>(null),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[form,setForm]=useState(initial),[notice,setNotice]=useState('')
  useEffect(()=>{localStorage.setItem('bl-lang',lang);document.documentElement.lang=lang;document.documentElement.dir=rtl?'rtl':'ltr'},[lang,rtl])
  async function refresh(){
   if(!db){setLoading(false);return}
