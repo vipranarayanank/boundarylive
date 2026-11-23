@@ -186,7 +186,7 @@ function App(){
     </section>
     <div className="home-info-grid"><a className="home-info-card" href="/details"><span className="eyebrow">MATCH CENTRE</span><h2>Match Details</h2><p>Teams, squads, venue, toss and tournament information.</p><strong>Explore details →</strong></a><a className="home-info-card" href="/live"><span className="eyebrow">WATCH NOW</span><h2>Live Match & Chat</h2><p>Watch the stream and open the live chat when you want to join in.</p><strong>Open live match →</strong></a></div>
     <div className="ad-slot adsterra-rectangle"><span>{t.ad}</span><AdsterraFrame width={300} height={250} keyId="cb17dc67c3edf8b48af9ce0d6ac6a0e6" title="Home page advertisement"/></div><NativeAd/>
-   </main>
+   </main>}
   <footer className="footer"><a href="/about.html">{t.about}</a><a href="/contact">{t.contact}</a><a href="/privacy.html">{t.privacy}</a><span>© {new Date().getFullYear()} BoundaryLive</span></footer>
  </div>
 }
