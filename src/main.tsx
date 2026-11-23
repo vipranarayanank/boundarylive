@@ -47,7 +47,7 @@ function ResponsiveTopAd(){
 }
 function NativeAd(){
  const srcDoc=`<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;padding:0;width:100%;min-height:100%;background:transparent}#container-17113e23d1586de3e816aeb0113374cf{width:100%;}</style></head><body><script async="async" data-cfasync="false" src="https://czernik.org/21/17113e23d1586de3e816aeb0113374cf"><\/script><div id="container-17113e23d1586de3e816aeb0113374cf"></div></body></html>`;
- return <section className="native-ad-wrap"><span>Advertisement</span><iframe className="native-ad-frame" title="BoundaryLive native advertisements" srcDoc={srcDoc} loading="lazy" sandbox="allow-scripts allow-forms" referrerPolicy="no-referrer"/></section>;
+ return <section className="native-ad-wrap"><span>Advertisement · Ads may not fill every visit</span><iframe className="native-ad-frame" title="BoundaryLive native advertisements" srcDoc={srcDoc} loading="lazy" referrerPolicy="strict-origin-when-cross-origin"/></section>;
 }
 function App(){
  const detected=(navigator.language||'en').slice(0,2) as Lang
