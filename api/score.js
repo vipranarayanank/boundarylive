@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
   const matchId = String(req.query.matchId || "161285");
-  if (!/^\\d{1,12}$/.test(matchId)) return res.status(400).json({ error: "Invalid match ID" });
+  if (!/^[0-9]{1,12}$/.test(matchId)) return res.status(400).json({ error: "Invalid match ID" });
   const refresh = Math.min(300, Math.max(15, Number(req.query.refresh) || 30));
   const cache = `public, s-maxage=${refresh}, stale-while-revalidate=${refresh * 2}`;
   res.setHeader("Cache-Control", cache);
