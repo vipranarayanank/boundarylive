@@ -12,7 +12,8 @@ export default defineConfig({
         index: page('index.html'),
         details: page('details.html'),
         live: page('live.html'),
-        contact: page('contact.html')
+        contact: page('contact.html'),
+        score: page('score.html')
       }
     }
   }
