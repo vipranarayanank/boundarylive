@@ -7,26 +7,45 @@ const num=(v:any)=>Number.isFinite(Number(v))?Number(v):0
 export default function ScorePage({matchId,refreshSeconds}:Props){
  const [data,setData]=useState<any>(null),[busy,setBusy]=useState(true),[error,setError]=useState(''),[lastUpdated,setLastUpdated]=useState(''),[selected,setSelected]=useState(0),[manualRefresh,setManualRefresh]=useState(0)
  useEffect(()=>{
-  let stopped=false,timeout:number|undefined
+  let stopped=false,timeout:number|undefined,controller:AbortController|undefined
   const delay=Math.min(300,Math.max(15,Number(refreshSeconds)||30))*1000
   const load=async()=>{
+   controller=new AbortController()
    try{
-    const response=await fetch('/api/score?matchId='+encodeURIComponent(matchId||'161285')+'&refresh='+Math.round(delay/1000))
-    if(!response.ok)throw new Error('Score service returned '+response.status)
+    const response=await fetch(`/api/score?matchId=${encodeURIComponent(matchId||'161285')}&refresh=${Math.round(delay/1000)}`,{
+     method:'GET',
+     headers:{Accept:'application/json'},
+     cache:'no-store',
+     signal:controller.signal
+    })
+    if(!response.ok){
+     const messages:Record<number,string>={
+      401:'Score service authorization is required. Please try again later.',
+      403:'Score data is currently unavailable.',
+      404:'This match could not be found.',
+      429:'Score updates are temporarily busy. Please try again shortly.',
+      500:'Match data is temporarily unavailable.',
+      502:'Unable to load live scores. Please try again.',
+      503:'Match data is temporarily unavailable.'
+     }
+     throw new Error(messages[response.status]||(response.status>=500?'Match data is temporarily unavailable.':'Unable to load live scores. Please try again.'))
+    }
     const result=await response.json()
-    if(!result?.data?.match_header)throw new Error('The score API response is missing match details.')
+    if(!result?.data?.match_header)throw new Error('Match data is temporarily unavailable.')
     if(stopped)return
     setData(result.data);setLastUpdated(result.fetchedAt||new Date().toISOString());setError('');setBusy(false)
     const complete=result.data.match_header.complete===true||String(result.data.match_header.state||'').toLowerCase()==='complete'
     if(!complete)timeout=window.setTimeout(load,delay)
    }catch(e){
-    if(stopped)return
-    setError(e instanceof Error?e.message:'Unable to load the score right now.');setBusy(false)
+    if(stopped||(e instanceof Error&&e.name==='AbortError'))return
+    setError(e instanceof Error?e.message:'Unable to connect. Please try again.')
+    setBusy(false)
     timeout=window.setTimeout(load,delay)
    }
   }
+  setBusy(!data)
   load()
-  return()=>{stopped=true;if(timeout)window.clearTimeout(timeout)}
+  return()=>{stopped=true;if(timeout)window.clearTimeout(timeout);controller?.abort()}
  },[matchId,refreshSeconds,manualRefresh])
  const header=data?.match_header||{},live=data?.live_score||{},innings=Array.isArray(data?.scorecard)?data.scorecard:[],commentary=useMemo(()=>Object.values(data?.commentary||{}).filter((x:any)=>x?.commType==='commentary'&&x?.commText).sort((a:any,b:any)=>num(b.timestamp)-num(a.timestamp)),[data])
  const current=innings[selected]||innings[innings.length-1]
