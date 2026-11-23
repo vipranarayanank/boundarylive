@@ -43,11 +43,11 @@ function AdsterraFrame({width,height,keyId,title}:{width:number;height:number;ke
 function ResponsiveTopAd(){
  const [mobile,setMobile]=useState(()=>window.matchMedia('(max-width: 600px)').matches);
  useEffect(()=>{const mq=window.matchMedia('(max-width: 600px)');const change=(e:MediaQueryListEvent)=>setMobile(e.matches);mq.addEventListener('change',change);return()=>mq.removeEventListener('change',change)},[]);
- return <div className="ad-slot top-ad"><span>Advertisement · If no ad appears, inventory may be unavailable</span><AdsterraFrame width={mobile?320:728} height={mobile?50:90} keyId={mobile?'562feb2d081b5b0ca9dcd57f03d6a2dd':'e69deac0722a5d5fa7aa9212bbbdda76'} title="BoundaryLive banner advertisement"/></div>;
+ return <div className="ad-slot top-ad"><span>Advertisement</span><AdsterraFrame width={mobile?320:728} height={mobile?50:90} keyId={mobile?'562feb2d081b5b0ca9dcd57f03d6a2dd':'e69deac0722a5d5fa7aa9212bbbdda76'} title="BoundaryLive banner advertisement"/></div>;
 }
 function NativeAd(){
  const srcDoc=`<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;padding:0;width:100%;min-height:100%;background:transparent}#container-17113e23d1586de3e816aeb0113374cf{width:100%;}</style></head><body><script async="async" data-cfasync="false" src="https://czernik.org/21/17113e23d1586de3e816aeb0113374cf"><\/script><div id="container-17113e23d1586de3e816aeb0113374cf"></div></body></html>`;
- return <section className="native-ad-wrap"><span>Advertisement · Ads may not fill every visit</span><iframe className="native-ad-frame" title="BoundaryLive native advertisements" srcDoc={srcDoc} loading="lazy" referrerPolicy="strict-origin-when-cross-origin"/></section>;
+ return <section className="native-ad-wrap"><span>Advertisement</span><iframe className="native-ad-frame" title="BoundaryLive native advertisements" srcDoc={srcDoc} loading="lazy" referrerPolicy="strict-origin-when-cross-origin"/></section>;
 }
 function App(){
  const detected=(navigator.language||'en').slice(0,2) as Lang
