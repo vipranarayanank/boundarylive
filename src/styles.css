@@ -112,3 +112,30 @@
  .chat-toggle-row{padding:0 14px 14px}
  .chat-toggle{padding:12px}
 }
+
+
+/* Clean match title and live-chat disclosure */
+.match-page-title{margin:4px 0 18px;padding:0 2px;color:#f2f6fb;font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.7px;line-height:1.2}
+.chat-toggle-row{padding:12px 18px 16px;background:#0d1b2c}
+.chat-toggle{min-height:48px;padding:12px 16px;border:1px solid #31506a;border-radius:12px;background:#12263b;color:#eaf2fa;box-shadow:0 2px 8px #0002;transition:background .18s,border-color .18s}
+.chat-toggle:hover{background:#18344c;border-color:#3d6b83}
+.chat-toggle:focus-visible,.chat-close:focus-visible{outline:2px solid #48d9a3;outline-offset:2px}
+.chat-toggle>span:first-child{font-size:14px}
+.chat-chevron{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:#203c52;font-size:18px}
+.chat-expanded{margin:12px 0 18px;padding:0;border-color:#2b435b;border-radius:15px;background:#0d1b2c;box-shadow:0 8px 24px #0002}
+.chat-expanded .chat-head{display:flex;align-items:center;justify-content:space-between;padding:17px 20px;border-bottom:1px solid #24374c}
+.chat-expanded .chat-head h2{font-size:16px;margin:0}
+.chat-expanded .chat-note{margin:0;padding:12px 20px 0;font-size:12px}
+.chat-expanded .chat-frame{height:560px;min-height:420px;margin:14px 16px 16px;border:1px solid #263e55;border-radius:12px;background:#07111f}
+.chat-expanded .mobile-chat-link{margin:12px 16px 16px}
+@media(max-width:820px){
+ .chat-expanded{margin:10px 0 16px}
+ .chat-expanded .chat-frame{display:none}
+ .chat-expanded .mobile-chat-link{display:flex}
+ .chat-expanded .chat-note{padding:12px 15px 0}
+}
+@media(max-width:600px){
+ .match-page-title{font-size:21px;margin:0 0 14px}
+ .chat-toggle-row{padding:10px 14px 14px}
+ .chat-expanded .chat-head{padding:14px 15px}
+}
