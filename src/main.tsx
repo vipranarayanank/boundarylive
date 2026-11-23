@@ -72,11 +72,11 @@ function App(){
  useEffect(()=>{localStorage.setItem('bl-lang',lang);document.documentElement.lang=lang;document.documentElement.dir=rtl?'rtl':'ltr'},[lang,rtl])
  useEffect(()=>{
   const origin='https://boundarylive-three.vercel.app';
-  const path=window.location.pathname.replace(/\/+$/,'')||'/';
+  const path=window.location.pathname.replace(/\\/+$/,'')||'/';
   const privatePage=path==='/admin'||path==='/admin/messages';
-  const matchName=settings.match_title&&settings.match_title!=='Cricket Live'?settings.match_title:'Live Cricket';
-  const title=path==='/details'?matchName+' – Match Details | BoundaryLive':path==='/live'?matchName+' – Live Cricket Streaming Today | BoundaryLive':path==='/contact'?'Contact BoundaryLive':matchName+' – Live Cricket Streaming Today | BoundaryLive';
-  const description=path==='/details'?'Match details for '+matchName+': teams, playing XI, venue, toss and tournament information on BoundaryLive.':'Watch cricket streaming today on BoundaryLive. Follow the featured live cricket match, match details, teams and tournament information for cricket fans in India.';
+  const matchName=settings.match_title&&settings.match_title!=='Cricket Live'?settings.match_title:'Cricket Match';
+  const title=path==='/details'?matchName+' – Match Details | BoundaryLive':path==='/live'?matchName+' – Live Cricket Stream | BoundaryLive':path==='/contact'?'Contact BoundaryLive':'BoundaryLive – Live Cricket Streaming Today in India';
+  const description=path==='/details'?'View '+matchName+' match details on BoundaryLive, including teams, playing XI, venue, toss, tournament information and match preview.':path==='/live'?'Open the BoundaryLive live cricket match page for the featured stream, match information and optional YouTube live chat.':path==='/contact'?'Contact BoundaryLive with cricket website questions, corrections, suggestions or feedback.':'Follow live cricket streaming today on BoundaryLive. Find the featured match, team information, playing XI, venue and tournament details for cricket fans in India.';
   document.title=title;
   const setMeta=(selector:string,key:string,value:string,content:string)=>{
    let node=document.head.querySelector<HTMLMetaElement>(selector);
@@ -89,17 +89,19 @@ function App(){
   setMeta('meta[property="og:site_name"]','property','og:site_name','BoundaryLive');
   setMeta('meta[property="og:title"]','property','og:title',title);
   setMeta('meta[property="og:description"]','property','og:description',description);
-  setMeta('meta[property="og:url"]','property','og:url',origin+path);
+  setMeta('meta[property="og:url"]','property','og:url',origin+(path==='/'?'/':path));
   setMeta('meta[property="og:locale"]','property','og:locale','en_IN');
   setMeta('meta[name="twitter:card"]','name','twitter:card','summary');
   setMeta('meta[name="twitter:title"]','name','twitter:title',title);
   setMeta('meta[name="twitter:description"]','name','twitter:description',description);
   let canonical=document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
   if(!canonical){canonical=document.createElement('link');canonical.rel='canonical';document.head.appendChild(canonical)}
-  canonical.href=origin+path;
+  canonical.href=origin+(path==='/'?'/':path);
   const graph:any[]=[
-   {'@type':'WebSite','@id':origin+'/#website',url:origin,name:'BoundaryLive',description:'Live cricket match coverage and match information for cricket fans in India.',inLanguage:['en','ta','hi','te','bn']},
-   {'@type':'Organization','@id':origin+'/#organization',name:'BoundaryLive',url:origin}
+   {'@type':'WebSite','@id':origin+'/#website',url:origin+'/',name:'BoundaryLive',description:'Live cricket match coverage and match information for cricket fans in India.',inLanguage:['en','ta','hi','te','bn']},
+   {'@type':'Organization','@id':origin+'/#organization',name:'BoundaryLive',url:origin+'/'},
+   {'@type':'WebPage','@id':origin+path+'#webpage',url:origin+(path==='/'?'/':path),name:title,description,inLanguage:'en-IN'},
+   {'@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Home',item:origin+'/'},...(path==='/'?[]:[{'@type':'ListItem',position:2,name:path==='/details'?'Match Details':path==='/live'?'Live Match':'Contact',item:origin+path}])]}
   ];
   if(path==='/details'&&settings.match_date&&settings.match_title){
    const event:any={'@type':'SportsEvent','name':settings.match_title,'sport':'Cricket','startDate':settings.match_date};
