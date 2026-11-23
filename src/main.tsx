@@ -70,6 +70,49 @@ function App(){
   const [chatOpen,setChatOpen]=useState(false)
  const admin=location.pathname.replace(/\/+$/,'')==='/admin'||location.pathname.replace(/\/+$/,'')==='/admin/messages',adminMessages=location.pathname.replace(/\/+$/,'')==='/admin/messages',contactPage=location.pathname.replace(/\/+$/,'')==='/contact',detailsPage=location.pathname.replace(/\/+$/,'')==='/details',livePage=location.pathname.replace(/\/+$/,'')==='/live',[session,setSession]=useState<any>(null),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[form,setForm]=useState(initial),[notice,setNotice]=useState(''),[messages,setMessages]=useState<any[]>([]),[contact,setContact]=useState({name:'',email:'',subject:'',message:''}),[sending,setSending]=useState(false),[sent,setSent]=useState(false),[adminAllowed,setAdminAllowed]=useState(false),[jsonInput,setJsonInput]=useState(''),[jsonError,setJsonError]=useState('')
  useEffect(()=>{localStorage.setItem('bl-lang',lang);document.documentElement.lang=lang;document.documentElement.dir=rtl?'rtl':'ltr'},[lang,rtl])
+ useEffect(()=>{
+  const origin='https://boundarylive-three.vercel.app';
+  const path=window.location.pathname.replace(/\/+$/,'')||'/';
+  const privatePage=path==='/admin'||path==='/admin/messages';
+  const matchName=settings.match_title&&settings.match_title!=='Cricket Live'?settings.match_title:'Live Cricket';
+  const title=path==='/details'?matchName+' – Match Details | BoundaryLive':path==='/live'?matchName+' – Live Cricket Streaming Today | BoundaryLive':path==='/contact'?'Contact BoundaryLive':matchName+' – Live Cricket Streaming Today | BoundaryLive';
+  const description=path==='/details'?'Match details for '+matchName+': teams, playing XI, venue, toss and tournament information on BoundaryLive.':'Watch cricket streaming today on BoundaryLive. Follow the featured live cricket match, match details, teams and tournament information for cricket fans in India.';
+  document.title=title;
+  const setMeta=(selector:string,key:string,value:string,content:string)=>{
+   let node=document.head.querySelector<HTMLMetaElement>(selector);
+   if(!node){node=document.createElement('meta');node.setAttribute(key,value);document.head.appendChild(node)}
+   node.content=content;
+  };
+  setMeta('meta[name="description"]','name','description',description);
+  setMeta('meta[name="robots"]','name','robots',privatePage?'noindex,nofollow':'index,follow,max-image-preview:large');
+  setMeta('meta[property="og:type"]','property','og:type','website');
+  setMeta('meta[property="og:site_name"]','property','og:site_name','BoundaryLive');
+  setMeta('meta[property="og:title"]','property','og:title',title);
+  setMeta('meta[property="og:description"]','property','og:description',description);
+  setMeta('meta[property="og:url"]','property','og:url',origin+path);
+  setMeta('meta[property="og:locale"]','property','og:locale','en_IN');
+  setMeta('meta[name="twitter:card"]','name','twitter:card','summary');
+  setMeta('meta[name="twitter:title"]','name','twitter:title',title);
+  setMeta('meta[name="twitter:description"]','name','twitter:description',description);
+  let canonical=document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  if(!canonical){canonical=document.createElement('link');canonical.rel='canonical';document.head.appendChild(canonical)}
+  canonical.href=origin+path;
+  const graph:any[]=[
+   {'@type':'WebSite','@id':origin+'/#website',url:origin,name:'BoundaryLive',description:'Live cricket match coverage and match information for cricket fans in India.',inLanguage:['en','ta','hi','te','bn']},
+   {'@type':'Organization','@id':origin+'/#organization',name:'BoundaryLive',url:origin}
+  ];
+  if(path==='/details'&&settings.match_date&&settings.match_title){
+   const event:any={'@type':'SportsEvent','name':settings.match_title,'sport':'Cricket','startDate':settings.match_date};
+   if(settings.venue||settings.city)event.location={'@type':'Place','name':[settings.venue,settings.city].filter(Boolean).join(', ')};
+   const competitors=[settings.team1_name,settings.team2_name].filter(Boolean).map(name=>({'@type':'SportsTeam','name':name}));
+   if(competitors.length)event.competitor=competitors;
+   graph.push(event);
+  }
+  let structured=document.getElementById('boundarylive-jsonld') as HTMLScriptElement|null;
+  if(!structured){structured=document.createElement('script');structured.id='boundarylive-jsonld';structured.type='application/ld+json';document.head.appendChild(structured)}
+  structured.textContent=JSON.stringify({'@context':'https://schema.org','@graph':graph});
+ },[settings.match_title,settings.match_date,settings.venue,settings.city,settings.team1_name,settings.team2_name]);
+
  function applyMatchJson(){
   setJsonError('');
   try{
@@ -153,7 +196,7 @@ function App(){
  <label>Points table · one team per line: Team | P | W | L | NR | Pts | NRR<textarea rows={7} value={form.points_table.map(x=>[x.team,x.played,x.won,x.lost,x.nr,x.points,x.nrr].join(' | ')).join('\n')} onChange={e=>setForm({...form,points_table:parseStandings(e.target.value)})} placeholder={'India | 4 | 3 | 1 | 0 | 6 | +1.25\nAustralia | 4 | 3 | 1 | 0 | 6 | +0.85'}/></label>
  <label>{t.question}<input value={form.poll_question} onChange={e=>setForm({...form,poll_question:e.target.value})}/></label><div className="poll-options-editor"><div className="poll-options-heading"><strong>Poll options</strong><span>{form.poll_options.length}/10</span></div>{form.poll_options.map((v,i)=><div className="poll-option-edit" key={i}><label>Option {i+1}<input maxLength={80} value={v} onChange={e=>setForm({...form,poll_options:form.poll_options.map((x,j)=>i===j?e.target.value:x)})} placeholder={'Enter option '+(i+1)}/></label><button className="remove-option" type="button" aria-label={'Remove option '+(i+1)} onClick={()=>setForm({...form,poll_options:form.poll_options.filter((_,j)=>j!==i)})} disabled={form.poll_options.length<=2}>×</button></div>)}<button className="secondary add-option" type="button" onClick={()=>setForm({...form,poll_options:[...form.poll_options,'']})} disabled={form.poll_options.length>=10}>+ Add option</button><small>Use 2 to 10 unique options. Leave no empty option fields.</small></div><button className="primary" type="submit">{t.save}</button><button className="secondary" type="button" onClick={signOut}>{t.signOut}</button>{notice&&<p className="success">{notice}</p>}{error&&<p className="error">{error}</p>}</form></> }</main>
    :detailsPage?<main className="content page-content">
-    <section className="page-heading"><span className="eyebrow">{settings.tournament_name||'MATCH CENTRE'}</span><h1>Match Details</h1><p>{settings.match_title||'Match information and team details'}</p></section>
+    <section className="page-heading"><span className="eyebrow">{settings.tournament_name||'MATCH CENTRE'}</span><h1>{settings.match_title || "Cricket Match"} – Match Details</h1><p>{settings.match_title||'Match information and team details'}</p></section>
     <ResponsiveTopAd/>
     <section className="match-overview">
      <div className="match-overview-top"><div><span className="eyebrow">{settings.match_number||settings.match_stage||'MATCH INFORMATION'}</span><h2>{settings.match_title||'Teams to be announced'}</h2><p>{settings.tournament_name}</p></div></div>
@@ -184,7 +227,7 @@ function App(){
      <div className="home-feature-copy"><span className="eyebrow">{player?'LIVE COVERAGE':'FEATURED MATCH'}</span><h2>{settings.match_title||'Follow the latest cricket match'}</h2><p>{[settings.tournament_name,settings.match_date,settings.match_time].filter(Boolean).join(' · ')||'Match information, teams and live coverage in one place.'}</p><div className="home-actions"><a className="primary page-action" href="/live">{player?'Watch Live':'Live Match'} <Radio size={16}/></a><a className="secondary page-action" href="/details">Match Details <ArrowLeft size={15}/></a></div></div>
      <div className="home-teams"><div><span>{settings.team1_flag||'🏏'}</span><strong>{settings.team1_name||'Team 1'}</strong></div><b>VS</b><div><span>{settings.team2_flag||'🏏'}</span><strong>{settings.team2_name||'Team 2'}</strong></div></div>
     </section>
-    <div className="home-info-grid"><a className="home-info-card" href="/details"><span className="eyebrow">MATCH CENTRE</span><h2>Match Details</h2><p>Teams, squads, venue, toss and tournament information.</p><strong>Explore details →</strong></a><a className="home-info-card" href="/live"><span className="eyebrow">WATCH NOW</span><h2>Live Match & Chat</h2><p>Watch the stream and open the live chat when you want to join in.</p><strong>Open live match →</strong></a></div>
+    <section className="seo-intro"><h2>Live cricket streaming today</h2><p>Follow the featured cricket match on BoundaryLive. Check match details, team line-ups, venue and tournament information, then open the live match page when coverage is available.</p>{((/india/i.test(settings.team1_name)&&/pakistan/i.test(settings.team2_name))||(/pakistan/i.test(settings.team1_name)&&/india/i.test(settings.team2_name)))?<p><strong>India vs Pakistan live:</strong> Visit the live match page for coverage when this fixture is scheduled.</p>:null}</section><div className="home-info-grid"><a className="home-info-card" href="/details"><span className="eyebrow">MATCH CENTRE</span><h2>Match Details</h2><p>Teams, squads, venue, toss and tournament information.</p><strong>Explore details →</strong></a><a className="home-info-card" href="/live"><span className="eyebrow">WATCH NOW</span><h2>Live Match & Chat</h2><p>Watch the stream and open the live chat when you want to join in.</p><strong>Open live match →</strong></a></div>
     <div className="ad-slot adsterra-rectangle"><span>{t.ad}</span><AdsterraFrame width={300} height={250} keyId="cb17dc67c3edf8b48af9ce0d6ac6a0e6" title="Home page advertisement"/></div><NativeAd/>
    </main>}
   <footer className="footer"><a href="/about.html">{t.about}</a><a href="/contact">{t.contact}</a><a href="/privacy.html">{t.privacy}</a><span>© {new Date().getFullYear()} BoundaryLive</span></footer>
