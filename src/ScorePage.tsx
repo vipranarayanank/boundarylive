@@ -38,7 +38,7 @@ export default function ScorePage({matchId,refreshSeconds}:Props){
     if(!complete)timeout=window.setTimeout(load,delay)
    }catch(e){
     if(stopped||(e instanceof Error&&e.name==='AbortError'))return
-    setError(e instanceof Error?e.message:'Unable to connect. Please try again.')
+    setError(e instanceof Error&&e.name!=='TypeError'&&e.name!=='SyntaxError'?e.message:'Unable to connect. Please try again.')
     setBusy(false)
     timeout=window.setTimeout(load,delay)
    }
