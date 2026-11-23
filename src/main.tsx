@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
-import { Globe2, Radio, Vote, ExternalLink, LoaderCircle, CheckCircle2, Inbox, ArrowLeft, Trash2, MapPin, CalendarDays, Trophy, Users } from 'lucide-react'
+import { Globe2, Radio, Vote, ExternalLink, LoaderCircle, CheckCircle2, Inbox, ArrowLeft, Trash2, Trophy, Users } from 'lucide-react'
 import './styles.css'
 
 type Lang = 'en'|'ta'|'hi'|'te'|'bn'|'es'|'fr'|'ar'|'id'
