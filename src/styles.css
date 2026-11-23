@@ -181,3 +181,8 @@
 @media(max-width:700px){.score-page-heading{padding:24px 0 16px}.score-result-card,.innings-overview,.scorecard-section,.commentary-section{padding:15px;border-radius:13px}.innings-summary-grid{grid-template-columns:1fr}.score-team-pair{padding:14px 10px;gap:8px}.score-team-pair span{font-size:10px}.score-team-pair strong{font-size:21px}.score-player-award{align-items:flex-start;flex-direction:column;gap:5px}.score-extras>b{width:100%;margin:4px 0 0}.score-refresh{font-size:11px;padding:9px 11px}}
 
 @media(max-width:700px){.site-nav{overflow-x:auto;scrollbar-width:none}.site-nav::-webkit-scrollbar{display:none}.site-nav a{flex:0 0 auto}}
+
+
+/* Compact mobile navigation bar */
+@media(max-width:700px){.topbar{padding:8px 12px 7px;gap:6px}.brand{font-size:18px;line-height:1.1}.brand-mark{width:30px;height:30px}.site-nav{gap:3px;padding-top:0;margin:0}.site-nav a{font-size:10px;padding:6px 8px;border-radius:7px;line-height:1.15}}
+@media(max-width:390px){.topbar{padding:7px 10px 6px}.site-nav{gap:2px}.site-nav a{font-size:9px;padding:5px 6px}}
