@@ -3,6 +3,7 @@
     { "source": "/details", "destination": "/details.html" },
     { "source": "/live", "destination": "/live.html" },
     { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/score", "destination": "/score.html" },
     { "source": "/(.*)", "destination": "/" }
   ],
   "headers": [
