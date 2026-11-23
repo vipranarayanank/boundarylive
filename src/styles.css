@@ -146,3 +146,29 @@
 .desktop-extra-ad .adsterra-frame{display:block;flex:0 0 auto;width:160px;max-width:100%;border:0}
 .desktop-extra-ad.tall-desktop-ad{margin-top:22px;margin-bottom:22px}
 @media(max-width:820px){.desktop-extra-ad{display:none}}
+
+/* Home, match details and dedicated live match pages */
+.site-nav{display:flex;align-items:center;gap:8px;margin-inline-start:auto;margin-inline-end:22px}
+.site-nav a{color:#9aabc0;text-decoration:none;font-size:13px;padding:9px 12px;border-radius:9px;white-space:nowrap}
+.site-nav a:hover,.site-nav a.active{color:#eaf5f0;background:#123c34}
+.page-content{padding-bottom:24px}
+.page-heading{padding:38px 0 22px}
+.page-heading h1{font-size:clamp(28px,5vw,40px);letter-spacing:-1.2px;margin:8px 0}
+.page-heading p{color:#9aabc0;margin:0;font-size:14px}
+.home-feature{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:20px;align-items:center;padding:26px;margin:0 0 20px;border:1px solid #29445a;border-radius:18px;background:linear-gradient(125deg,#112a40,#0d1b2c 65%)}
+.home-feature-copy h2{font-size:clamp(24px,4vw,34px);margin:8px 0}
+.home-feature-copy p{color:#9aabc0;font-size:13px;line-height:1.6}
+.home-actions,.page-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.page-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;padding:12px 16px;font-size:13px;border-radius:10px}
+.home-teams{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;text-align:center;padding:20px 12px;border:1px solid #2a4056;border-radius:14px;background:#0a1726}
+.home-teams div{display:grid;gap:8px;justify-items:center;min-width:0}
+.home-teams div span{font-size:34px}
+.home-teams strong{font-size:14px;overflow-wrap:anywhere}
+.home-teams>b{color:#7f95aa;font-size:12px}
+.home-info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+.home-info-card{display:block;text-decoration:none;padding:22px;border:1px solid #263e55;border-radius:15px;background:#0d1b2c;color:#edf4fb}
+.home-info-card h2{font-size:19px;margin:8px 0}
+.home-info-card p{color:#9aabc0;font-size:13px;line-height:1.6;min-height:42px}
+.home-info-card strong{font-size:12px;color:#62dca9}
+@media(max-width:700px){.topbar{gap:8px}.site-nav{gap:2px;margin-inline-start:auto;margin-inline-end:8px}.site-nav a{font-size:11px;padding:8px 7px}.home-feature{grid-template-columns:1fr;padding:18px}.home-info-grid{grid-template-columns:1fr}.page-heading{padding:26px 0 18px}.home-info-card p{min-height:0}}
+@media(max-width:390px){.site-nav a{font-size:10px;padding:7px 5px}.brand{font-size:16px}.brand-mark{width:30px;height:30px}.top-actions{gap:4px}.language select{max-width:66px}}
