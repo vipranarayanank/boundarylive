@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
-import { Radio, Vote, ExternalLink, LoaderCircle, CheckCircle2, Inbox, ArrowLeft, Trash2, Trophy, Users } from 'lucide-react'
+import { Radio, Vote, CheckCircle2, Inbox, ArrowLeft, Trash2, Trophy, Users } from 'lucide-react'
 import './styles.css'
 import ScorePage from './ScorePage'
 
@@ -64,8 +64,7 @@ function NativeAd(){
 }
 function App(){
  const t=copy.en
- const [settings,setSettings]=useState<Settings>(initial),[loading,setLoading]=useState(true),[choice,setChoice]=useState(''),[voted,setVoted]=useState(false),[counts,setCounts]=useState<number[]>([]),[error,setError]=useState('')
-  const [chatOpen,setChatOpen]=useState(false)
+ const [settings,setSettings]=useState<Settings>(initial),[,setLoading]=useState(true),[choice,setChoice]=useState(''),[voted,setVoted]=useState(false),[counts,setCounts]=useState<number[]>([]),[error,setError]=useState('')
  const admin=location.pathname.replace(/\/+$/,'')==='/admin'||location.pathname.replace(/\/+$/,'')==='/admin/messages',adminMessages=location.pathname.replace(/\/+$/,'')==='/admin/messages',contactPage=location.pathname.replace(/\/+$/,'')==='/contact',detailsPage=location.pathname.replace(/\/+$/,'')==='/details',livePage=location.pathname.replace(/\/+$/,'')==='/live',scorePage=location.pathname.replace(/\/+$/,'')==='/score',[session,setSession]=useState<any>(null),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[form,setForm]=useState(initial),[notice,setNotice]=useState(''),[messages,setMessages]=useState<any[]>([]),[contact,setContact]=useState({name:'',email:'',subject:'',message:''}),[sending,setSending]=useState(false),[sent,setSent]=useState(false),[adminAllowed,setAdminAllowed]=useState(false),[jsonInput,setJsonInput]=useState(''),[jsonError,setJsonError]=useState('')
  useEffect(()=>{document.documentElement.lang='en';document.documentElement.dir='ltr'},[])
  useEffect(()=>{
