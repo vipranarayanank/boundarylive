@@ -102,3 +102,37 @@ where s.id=1 and c.poll_id=p_poll_id order by array_position(s.poll_options,c.op
 $$;
 revoke all on function public.get_poll_results(uuid) from public;
 grant execute on function public.get_poll_results(uuid) to anon,authenticated;
+
+
+-- Private inbox for public contact form submissions
+create table if not exists public.contact_messages (
+  id uuid primary key default gen_random_uuid(),
+  name text,
+  email text,
+  subject text not null check (char_length(subject) between 1 and 120),
+  message text not null check (char_length(message) between 5 and 5000),
+  status text not null default 'unread' check (status in ('unread','read')),
+  created_at timestamptz not null default now()
+);
+alter table public.contact_messages enable row level security;
+revoke all on public.contact_messages from public, anon, authenticated;
+grant insert on public.contact_messages to anon, authenticated;
+grant select, update, delete on public.contact_messages to authenticated;
+create policy "Visitors can submit contact messages" on public.contact_messages
+for insert to anon, authenticated
+with check (
+  (name is null or char_length(name) <= 80)
+  and (email is null or (char_length(email) <= 254 and email ~* '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$'))
+  and char_length(subject) between 1 and 120
+  and char_length(message) between 5 and 5000
+);
+create policy "Admins can read contact messages" on public.contact_messages
+for select to authenticated
+using (exists (select 1 from public.admin_users a where a.user_id = auth.uid()));
+create policy "Admins can update contact messages" on public.contact_messages
+for update to authenticated
+using (exists (select 1 from public.admin_users a where a.user_id = auth.uid()))
+with check (exists (select 1 from public.admin_users a where a.user_id = auth.uid()));
+create policy "Admins can delete contact messages" on public.contact_messages
+for delete to authenticated
+using (exists (select 1 from public.admin_users a where a.user_id = auth.uid()));
