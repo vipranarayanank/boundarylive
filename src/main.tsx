@@ -72,7 +72,7 @@ function App(){
  useEffect(()=>{localStorage.setItem('bl-lang',lang);document.documentElement.lang=lang;document.documentElement.dir=rtl?'rtl':'ltr'},[lang,rtl])
  useEffect(()=>{
   const origin='https://boundarylive-three.vercel.app';
-  const path=window.location.pathname.replace(/\\/+$/,'')||'/';
+  const path=window.location.pathname.replace(/\/+$/,'')||'/';
   const privatePage=path==='/admin'||path==='/admin/messages';
   const matchName=settings.match_title&&settings.match_title!=='Cricket Live'?settings.match_title:'Cricket Match';
   const title=path==='/details'?matchName+' – Match Details | BoundaryLive':path==='/live'?matchName+' – Live Cricket Stream | BoundaryLive':path==='/contact'?'Contact BoundaryLive':'BoundaryLive – Live Cricket Streaming Today in India';
