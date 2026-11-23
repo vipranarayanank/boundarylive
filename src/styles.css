@@ -23,3 +23,14 @@
 .remove-option{width:40px;height:40px;flex:0 0 40px;border:1px solid #35485e;border-radius:9px;background:#17283a;color:#dce7f2;font-size:22px;cursor:pointer}
 .remove-option:disabled{opacity:.35;cursor:not-allowed}
 .add-option{align-self:flex-start}
+
+/* Adsterra placements */
+.adsterra-frame{display:block;border:0;max-width:100%;background:transparent}
+.top-ad{height:auto;min-height:110px;padding:10px;gap:8px}
+.top-ad .adsterra-frame{flex:0 0 auto}
+.adsterra-rectangle{height:auto;min-height:276px;padding:12px;gap:8px}
+.adsterra-rectangle .adsterra-frame{width:300px;max-width:100%;height:250px}
+.native-ad-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;min-height:280px;margin:18px 0;padding:12px;border:1px dashed #34465a;border-radius:12px;background:#0b1828;color:#8293a7}
+.native-ad-wrap>span{font-size:10px;letter-spacing:1.2px;text-transform:uppercase}
+.native-ad-frame{display:block;width:100%;height:280px;border:0;background:transparent}
+@media(max-width:600px){.top-ad{min-height:78px}.native-ad-wrap{min-height:250px;padding:8px}.native-ad-frame{height:260px}}
