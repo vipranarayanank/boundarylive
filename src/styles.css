@@ -34,3 +34,44 @@
 .native-ad-wrap>span{font-size:10px;letter-spacing:1.2px;text-transform:uppercase}
 .native-ad-frame{display:block;width:100%;height:280px;border:0;background:transparent}
 @media(max-width:600px){.top-ad{min-height:78px}.native-ad-wrap{min-height:250px;padding:8px}.native-ad-frame{height:260px}}
+
+
+/* Match centre and admin match manager */
+.admin-section-title{margin:12px 0 0;padding-bottom:9px;border-bottom:1px solid #26394f;color:#eaf2fa;font-size:15px}
+.match-editor-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.match-editor-grid label{min-width:0}
+.admin-form textarea{line-height:1.5}
+.match-overview,.lineups-section,.points-section,.preview-section{background:#0d1b2c;border:1px solid #24374c;border-radius:17px;padding:20px;margin:0 0 18px;min-width:0}
+.match-overview-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.match-overview-top h2{font-size:clamp(22px,4vw,30px);letter-spacing:-.7px;margin:6px 0}
+.match-overview-top p{margin:0;color:#94a9bf;font-size:12px}
+.match-meta{display:flex;flex-wrap:wrap;gap:12px 20px;margin:17px 0;color:#a8bacd;font-size:12px}
+.match-meta span{display:inline-flex;align-items:center;gap:7px}
+.match-teams{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.match-team{padding:16px;border:1px solid #2b4057;border-radius:13px;background:linear-gradient(135deg,#14283d,#0c1928)}
+.team-identity{display:flex;align-items:center;gap:10px;font-size:17px}
+.team-flag{font-size:26px}
+.team-captain{display:block;color:#91a8bf;font-size:11px;margin:8px 0 0 38px}
+.toss-note{margin:14px 0 0;padding-top:12px;border-top:1px solid #26394f;color:#c5d4e3;font-size:12px}
+.section-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;color:#9ab0c7}
+.section-heading h2{margin:5px 0 0;color:#f2f6fb;font-size:19px}
+.lineups-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.lineup-card{border:1px solid #293e55;border-radius:12px;padding:14px;min-width:0}
+.lineup-card h3{display:flex;align-items:center;gap:8px;margin:0 0 12px;font-size:15px}
+.lineup-player{display:flex;align-items:center;gap:9px;padding:8px 0;border-top:1px solid #ffffff0d;font-size:12px;color:#e0e8f1}
+.player-number{display:grid;place-items:center;width:22px;height:22px;border-radius:7px;background:#1b3349;color:#8ee4c1;font-size:10px;font-weight:800;flex:0 0 22px}
+.lineup-player small{margin-inline-start:auto;color:#91a7bd;font-size:10px}
+.points-table-wrap{width:100%;overflow-x:auto}
+.points-table{width:100%;border-collapse:collapse;min-width:420px;font-size:12px}
+.points-table th{text-align:left;color:#90a7bd;font-size:10px;text-transform:uppercase;letter-spacing:.6px;background:#12243a}
+.points-table th,.points-table td{padding:11px 10px;border-bottom:1px solid #25384d;white-space:nowrap}
+.points-table td:first-child{font-weight:700;color:#eef4fa}
+.preview-section h2{font-size:19px;margin:6px 0 10px}
+.preview-section p{color:#b5c5d6;font-size:13px;line-height:1.7;white-space:pre-wrap;margin:0}
+@media(max-width:600px){
+ .match-editor-grid,.match-teams,.lineups-grid{grid-template-columns:1fr}
+ .match-overview,.lineups-section,.points-section,.preview-section{padding:15px;border-radius:14px}
+ .match-overview-top h2{font-size:22px}
+ .team-captain{margin-inline-start:38px}
+ .match-meta{gap:9px 14px}
+}
