@@ -172,3 +172,6 @@
 .home-info-card strong{font-size:12px;color:#62dca9}
 @media(max-width:700px){.topbar{height:auto;min-height:0;padding:12px 16px 10px;display:flex;flex-wrap:wrap;justify-content:flex-start;gap:10px 8px}.brand{width:100%;font-size:20px}.site-nav{order:2;width:100%;display:flex;justify-content:flex-start;gap:5px;margin:0;padding-top:2px}.site-nav a{font-size:12px;padding:8px 11px}.top-actions{display:none}.home-feature{grid-template-columns:1fr;padding:18px}.home-info-grid{grid-template-columns:1fr}.page-heading{padding:26px 0 18px}.home-info-card p{min-height:0}}
 @media(max-width:390px){.site-nav a{font-size:10px;padding:7px 5px}.brand{font-size:16px}.brand-mark{width:30px;height:30px}.top-actions{gap:4px}.language select{max-width:66px}}
+
+/* Search-friendly home page introduction */
+.seo-intro{margin:18px 0 22px;padding:20px 22px;border:1px solid #263e55;border-radius:15px;background:#0d1b2c}.seo-intro h2{margin:0 0 8px;color:#f2f6fb;font-size:19px}.seo-intro p{margin:0;color:#aebed0;font-size:13px;line-height:1.7}.seo-intro p+p{margin-top:9px}@media(max-width:600px){.seo-intro{padding:16px}}
