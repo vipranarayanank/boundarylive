@@ -1,4 +1,4 @@
-import React,{useEffect,useMemo,useState} from 'react'
+import {useEffect,useMemo,useState} from 'react'
 
 type Props={matchId:string;refreshSeconds:number}
 const ordinal=(n:number)=>n===1?'1st':n===2?'2nd':n===3?'3rd':n+'th'
