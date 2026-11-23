@@ -20,9 +20,9 @@ export default async function handler(req, res) {
     if (!upstream.ok) {
       res.setHeader("Cache-Control", "no-store");
       if (upstream.status === 401 || upstream.status === 403) {
-        return res.status(502).json({ error: "The cricket score API requires access authorization. Make the endpoint public or configure CRICKET_API_BYPASS_SECRET / CRICKET_API_TOKEN in BoundaryLive's Vercel environment." });
+        return res.status(502).json({ error: "Match data is temporarily unavailable. Please try again later." });
       }
-      return res.status(502).json({ error: "Score source returned HTTP " + upstream.status });
+      return res.status(502).json({ error: "Unable to load live scores. Please try again." });
     }
     const data = await upstream.json();
     if (!data || !data.match_header || data.status !== "success") {
